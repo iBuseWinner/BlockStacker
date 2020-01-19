@@ -37,25 +37,32 @@ public class BSAddon extends Addon {
     public void onEnable() {
         instance = this;
 
+        saveDefaultConfig();
+        BSLogger.msg("§5[BlockStacker] Default config saved.");
+        cm = new ConfigManager();
+        BSLogger.msg("§5[BlockStacker] ConfigManager loaded.");
         registerInstances();
+        BSLogger.msg("§5[BlockStacker] Instances registered.");
         registerEvents();
-
+        BSLogger.msg("§5[BlockStacker] Events registered.");
         stackers = new ArrayList<>();
         Settings.addAllStackers();
-
-        saveDefaultConfig();
-
-        cm = new ConfigManager();
+        BSLogger.msg("§5[BlockStacker] Stackers added.");
         mm = new MessageManager();
+        BSLogger.msg("§5[BlockStacker] MessageManager loaded.");
 
         useSQL = cm.isMySQLEnabled();
+        BSLogger.msg("§5[BlockStacker] Use SQL: "+useSQL+".");
 
         if(useSQL) {
             try {
+                BSLogger.msg("§5[BlockStacker] Trying to connect to DataBase...");
                 connectSQL();
                 if(con != null && con.isClosed()) {
+                    BSLogger.msg("§5[BlockStacker] Checking table...");
                     myM.checkForTable(table);
                     new DataBasePing(this, BentoBox.getInstance());
+                    BSLogger.msg("§5[BlockStacker] Now pinging database.");
                     Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN +"[BlockStackerX] Loaded "+myM.load()+" Stackers");
                 } else {
                     Bukkit.getConsoleSender().sendMessage(ChatColor.RED +"[BlockStackerX] Dyrak nastroy config.yml debil blyat");
@@ -70,7 +77,13 @@ public class BSAddon extends Addon {
 
     @Override
     public void onDisable() {
-
+        myM.save();
+        try {
+            con.close();
+            BSLogger.msg("§5[BlockStacker] Connection closed.");
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
     public void registerEvents() {
