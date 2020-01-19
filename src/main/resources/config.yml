@@ -1,0 +1,12 @@
+#MySQL options
+MySQL:
+  enabled: false
+  host: "null"
+  database: "null"
+  username: "null"
+  password: "null"
+  table: "null"
+  port: 3306
+
+autosave-timer: 15
+autosave-enabled: true
