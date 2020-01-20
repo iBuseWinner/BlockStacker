@@ -56,19 +56,19 @@ public class Settings {
         ArrayList<String> allowedBlocks6 = new ArrayList<>();
         allowedBlocks6.add("GOLD_BLOCK");
 
-        IStack gstack2 = new IStack("gtack",displayOffset,"GOLD_BLOCK","§eЗолотой стакер",all,lore,valueFormat,
+        IStack gstack2 = new IStack("gtack2",displayOffset,"GOLD_BLOCK","§eЗолотой стакер",all,lore,valueFormat,
                 twoMax,all,allowedBlocks6,"§eЗолотой стакер",all,itemLore);
 
         ArrayList<String> allowedBlocks7 = new ArrayList<>();
         allowedBlocks7.add("DIAMOND_BLOCK");
 
-        IStack dstack2 = new IStack("dtack",displayOffset,"DIAMOND_BLOCK","§bАлмазный стакер",all,lore,valueFormat,
+        IStack dstack2 = new IStack("dtack2",displayOffset,"DIAMOND_BLOCK","§bАлмазный стакер",all,lore,valueFormat,
                 twoMax,all,allowedBlocks7,"§bАлмазный стакер",all,itemLore);
 
         ArrayList<String> allowedBlocks8 = new ArrayList<>();
         allowedBlocks8.add("EMERALD_BLOCK");
 
-        IStack estack2 = new IStack("etack",displayOffset,"EMERALD_BLOCK","§aИзумрудный стакер",all,lore,valueFormat,
+        IStack estack2 = new IStack("etack2",displayOffset,"EMERALD_BLOCK","§aИзумрудный стакер",all,lore,valueFormat,
                 twoMax,all,allowedBlocks8,"§aИзумрудный стакер",all,itemLore);
 
         BSAddon.stackers.add(itack);

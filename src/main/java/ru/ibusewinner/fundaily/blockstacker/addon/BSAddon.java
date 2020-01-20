@@ -84,7 +84,7 @@ public class BSAddon extends Addon {
 
     @Override
     public void onDisable() {
-        myM.save();
+        myM.updateAndSave();
         disconnectSql();
         BSLogger.msg("§5[BlockStacker] Connection closed.");
     }

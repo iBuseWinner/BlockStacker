@@ -39,7 +39,7 @@ public class StackerRemoveBlocks implements Listener {
 
                     if(sp.getUuid().equals(uuid) || teamStacking && util.playerIsOnTeamOf(uuid, sp.getUuid())) {
                         if(player.hasPermission("bs.takeblocks")) {
-                            if(!util.isPickaxe(player.getItemInHand().getType())) {
+                            if(util.isPickaxe(player.getItemInHand().getType())) {
                                 if(!player.isSneaking()) {
                                     if(hasAvaliableSlot(player, sp.getChosenMaterial(), 1)) {
                                         sp.decrementValueby(1);

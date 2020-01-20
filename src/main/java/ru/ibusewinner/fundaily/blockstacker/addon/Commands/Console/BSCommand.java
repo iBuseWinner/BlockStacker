@@ -93,7 +93,7 @@ public class BSCommand extends CompositeCommand {
                                 for(IStack iStack : BSAddon.stackers) {
                                     if(iStack.getCfgName().equalsIgnoreCase(stackerType)) {
                                         target.getInventory().addItem(BSAddon.get().blockFactory.getStacker(iStack.getCfgName(), 1));
-                                        user.sendMessage("&7> Блок &a"+iStack.getCfgName()+"&7 выдан игроку &a"+target.getName()+"&7 в количестве &a"+count+"шт&7!");
+                                        user.sendMessage(mm.applyCC("&7> Блок &a"+iStack.getCfgName()+"&7 выдан игроку &a"+target.getName()+"&7 в количестве &a"+count+"шт&7!"));
                                     }
                                 }
                             }
@@ -111,9 +111,9 @@ public class BSCommand extends CompositeCommand {
 
     private void sendList(User user) {
         user.sendMessage(mm.applyCC("&7> Список стакеров и немного инфы о них:"));
-        user.sendMessage(mm.applyCC("&0"));
+        user.sendMessage("§0");
         for(IStack iStack : BSAddon.stackers) {
-            user.sendMessage(mm.applyCC("&7> Название: &a"+iStack.getCfgName()+"&7, Блок(и): &a"+iStack.getAllowedBlocks().toString()));
+            user.sendMessage(mm.applyCC("&7> Название: &a"+iStack.getCfgName()+"&7, Блок(и): &a"+iStack.getAllowedBlocks().toString()+"&7, Вместимость: &a"+iStack.getMax()));
         }
     }
 }

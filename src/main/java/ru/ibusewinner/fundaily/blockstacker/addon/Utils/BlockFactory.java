@@ -29,6 +29,7 @@ public class BlockFactory {
                 if(stack.glow()) {
                     meta.addEnchant(Enchantment.ARROW_INFINITE, 1, false);
                     meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+                    meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
                 }
                 item.setItemMeta(meta);
 

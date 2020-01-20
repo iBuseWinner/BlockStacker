@@ -103,10 +103,9 @@ public class StackerPlaced {
 
     }
 
-    public double computeAndGetLevels()
+    public long computeAndGetLevels()
     {
-        double blockValue = Worth.getWorth(this.chosenMaterial);
-
+        long blockValue = Worth.getWorth(this.chosenMaterial);
         return (blockValue * this.value);
     }
 
