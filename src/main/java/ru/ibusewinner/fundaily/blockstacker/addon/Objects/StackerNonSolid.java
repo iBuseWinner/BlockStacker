@@ -8,7 +8,9 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import ru.ibusewinner.fundaily.blockstacker.addon.BSAddon;
+import ru.ibusewinner.fundaily.blockstacker.addon.Utils.IStack;
 import ru.ibusewinner.fundaily.blockstacker.addon.Utils.MessageManager;
+import ru.ibusewinner.fundaily.blockstacker.addon.Utils.Settings;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,29 +33,35 @@ public class StackerNonSolid {
         ItemStack stack = new ItemStack(mat);
         ItemMeta meta = stack.getItemMeta();
 
-        meta.setDisplayName(mm.applyCC(plugin.getConfig().getString("Stackers." + type + ".item.displayName")));
+        for(IStack iStack : Settings.getAllStackers()) {
+            if(iStack.getCfgName().equalsIgnoreCase(type)) {
+                meta.setDisplayName(mm.applyCC(iStack.getDisplayName()));
 
-        List<String> lore = new ArrayList<>();
-        for (String s : plugin.getConfig().getStringList("Stackers." + type + ".item.lore")) {
-            lore.add(mm.applyCC(s.replace("%VALUE%", "" + value)));
+                List<String> lore = new ArrayList<>();
+                for(String s : iStack.getItemLore()) {
+                    lore.add(mm.applyCC(s.replaceAll("%VALUE%", ""+value)));
+                }
+                meta.setLore(lore);
+
+                if(iStack.glow()) {
+                    meta.addEnchant(Enchantment.ARROW_INFINITE, 1, false);
+                    meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+                    meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+                }
+
+                stack.setItemMeta(meta);
+
+                NBTItem nbtItem = new NBTItem(stack);
+
+                nbtItem.setBoolean("BlockStackerX_nonSolid", true);
+                nbtItem.setString("StackerType", type);
+                nbtItem.setString("StackerMaterial", mat.toString());
+                nbtItem.setInteger("StackerValue", value);
+
+                return nbtItem.getItem();
+            }
         }
-        meta.setLore(lore);
 
-        if (plugin.getConfig().getBoolean("Stackers." + type + ".item.glow")) {
-            meta.addEnchant(Enchantment.ARROW_INFINITE, 1, false);
-            meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        }
-
-        stack.setItemMeta(meta);
-
-        //NBT
-        NBTItem nbtItem = new NBTItem(stack);
-        nbtItem.setBoolean("BlockStackerX_nonSolid", true);
-        nbtItem.setString("StackerType", type);
-        nbtItem.setString("StackerMaterial", mat.toString());
-        nbtItem.setInteger("StackerValue", value);
-
-        return nbtItem.getItem();
+        return null;
     }
 }

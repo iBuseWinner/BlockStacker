@@ -1,6 +1,6 @@
 package ru.ibusewinner.fundaily.blockstacker.addon.Events;
 
-import de.tr7zw.changeme.nbtapi.NBTItem;
+import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
