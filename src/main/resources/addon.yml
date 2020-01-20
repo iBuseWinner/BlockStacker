@@ -1,3 +1,6 @@
 name: BlockStacker
 main: ru.ibusewinner.fundaily.blockstacker.addon.BSAddon
 version: 1.0
+icon: BEACON
+
+softdepend: BSkyBlock, Level

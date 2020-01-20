@@ -13,8 +13,7 @@ import java.util.List;
 public class BlockFactory {
     private BSAddon bsAddon = BSAddon.get();
 
-    public ItemStack getStacker(String type, int amt)
-    {
+    public ItemStack getStacker(String type, int amt) {
         for(IStack stack : Settings.getAllStackers()) {
             if(stack.getCfgName().equalsIgnoreCase(type)) {
                 String itemType = stack.getItemType();

@@ -2,6 +2,7 @@ package ru.ibusewinner.fundaily.blockstacker.addon;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import ru.ibusewinner.fundaily.blockstacker.addon.Commands.Console.BSCommand;
 import ru.ibusewinner.fundaily.blockstacker.addon.Data.MySQLManager;
 import ru.ibusewinner.fundaily.blockstacker.addon.Data.PlacedStacks;
 import ru.ibusewinner.fundaily.blockstacker.addon.Events.*;
@@ -48,8 +49,6 @@ public class BSAddon extends Addon {
         stackers = new ArrayList<>();
         Settings.addAllStackers();
         BSLogger.msg("§5[BlockStacker] Stackers added.");
-        mm = new MessageManager();
-        BSLogger.msg("§5[BlockStacker] MessageManager loaded.");
 
         useSQL = cm.isMySQLEnabled();
         BSLogger.msg("§5[BlockStacker] Use SQL: "+useSQL+".");
@@ -58,7 +57,11 @@ public class BSAddon extends Addon {
             try {
                 BSLogger.msg("§5[BlockStacker] Trying to connect to DataBase...");
                 connectSQL();
-                if(con != null && con.isClosed()) {
+                BSLogger.msg("Con closed: "+con.isClosed());
+                if(con == null) {
+                    BSLogger.msg("Con is null!");
+                }
+                if(con != null && !con.isClosed()) {
                     BSLogger.msg("§5[BlockStacker] Checking table...");
                     myM.checkForTable(table);
                     new DataBasePing(this, BentoBox.getInstance());
@@ -70,20 +73,20 @@ public class BSAddon extends Addon {
             }catch (SQLException ex) {
                 ex.printStackTrace();
             }
+
+            if(cm.isAutoSaveEnabled()) {
+                new AutoSave(BentoBox.getInstance());
+            }
         } else {
-            Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[BlockStackerX] Ну ты и дурак...");
+            Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[BlockStackerX] Конфиг настрой. Плагин не работает без му~сука");
         }
     }
 
     @Override
     public void onDisable() {
         myM.save();
-        try {
-            con.close();
-            BSLogger.msg("§5[BlockStacker] Connection closed.");
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
+        disconnectSql();
+        BSLogger.msg("§5[BlockStacker] Connection closed.");
     }
 
     public void registerEvents() {
@@ -92,9 +95,12 @@ public class BSAddon extends Addon {
         Bukkit.getPluginManager().registerEvents(new StackerAddBlocks(), BentoBox.getInstance());
         Bukkit.getPluginManager().registerEvents(new StackerRemoveBlocks(), BentoBox.getInstance());
         Bukkit.getPluginManager().registerEvents(new BentoCalculation(), BentoBox.getInstance());
+
+        new BSCommand(this);
     }
 
     private void registerInstances() {
+        mm = new MessageManager();
         blockFactory = new BlockFactory();
         utils = new Utils();
         placedStacks = new PlacedStacks();
@@ -112,14 +118,14 @@ public class BSAddon extends Addon {
 
         try {
             if(getConnection() != null && !getConnection().isClosed()) {
+                BSLogger.msg("Con is closed: "+getConnection().isClosed());
                 return;
             }
 
-            Class.forName("com.mysql.jdbc.Driver");
-            setConnection(DriverManager.getConnection("jdbc:mysql://" + this.host + ":" + this.port + "/" + this.database, this.user, this.password));
+            this.con = DriverManager.getConnection("jdbc:mysql://"+host+":"+port+"/"+database,user,password);
             Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "[BlockStackerX] Successfully connected to mySql");
-        }catch (SQLException | ClassNotFoundException ex) {
-            Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "Could not connect to mySql!, using Yaml Storage");
+        }catch (SQLException ex) {
+            Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "Could not connect to mySql!");
             ex.printStackTrace();
         }
     }
@@ -138,10 +144,6 @@ public class BSAddon extends Addon {
 
     public Connection getConnection() {
         return con;
-    }
-
-    private void setConnection(Connection connection) {
-        this.con = connection;
     }
 
     public String getTable() {

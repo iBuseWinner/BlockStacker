@@ -3,6 +3,8 @@ package ru.ibusewinner.fundaily.blockstacker.addon.Utils;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import ru.ibusewinner.fundaily.blockstacker.addon.BSAddon;
+import world.bentobox.bentobox.api.localization.TextVariables;
+import world.bentobox.bentobox.api.user.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,6 +68,21 @@ public class MessageManager {
     public void sendUsage(Player p) {
         for(String s : usage) {
             p.sendMessage(applyCC(s));
+        }
+    }
+
+    public void putUsage() {
+        usage.add(applyCC("&7> &6&lBlock&e&lStacker"));
+        usage.add(applyCC("&0"));
+        usage.add(applyCC("&7> &a/bs give <ник> <тип стакера> <количество>"));
+        usage.add(applyCC("&7> &a/bs getworth <блок>"));
+        usage.add(applyCC("&7> &a/bs list"));
+        usage.add(applyCC("&7> &a/bs setworth <блок> <цена>"));
+    }
+
+    public void sendUsage(User user) {
+        for(String s : usage) {
+            user.sendMessage(applyCC(s));
         }
     }
 

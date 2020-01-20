@@ -11,6 +11,7 @@ public class Settings {
         String valueFormat = "§9Содержит: §f%VALUE%";
         String displayOffset = "0.5,1.7,0.5";
         int max = 1000;
+        int twoMax = 10000;
         boolean all = true;
         ArrayList<String> lore = new ArrayList<>();
         lore.add("§a");
@@ -46,10 +47,38 @@ public class Settings {
         IStack estack = new IStack("etack",displayOffset,"EMERALD_BLOCK","§aИзумрудный стакер",all,lore,valueFormat,
                 max,all,allowedBlocks4,"§aИзумрудный стакер",all,itemLore);
 
+        ArrayList<String> allowedBlocks5 = new ArrayList<>();
+        allowedBlocks5.add("IRON_BLOCK");
+
+        IStack itack2 = new IStack("itack2",displayOffset,"IRON_BLOCK","§fЖелезный стакер",all,lore,valueFormat,
+                twoMax,all,allowedBlocks5,"§4Железный стакер",all,itemLore);
+
+        ArrayList<String> allowedBlocks6 = new ArrayList<>();
+        allowedBlocks6.add("GOLD_BLOCK");
+
+        IStack gstack2 = new IStack("gtack",displayOffset,"GOLD_BLOCK","§eЗолотой стакер",all,lore,valueFormat,
+                twoMax,all,allowedBlocks6,"§eЗолотой стакер",all,itemLore);
+
+        ArrayList<String> allowedBlocks7 = new ArrayList<>();
+        allowedBlocks7.add("DIAMOND_BLOCK");
+
+        IStack dstack2 = new IStack("dtack",displayOffset,"DIAMOND_BLOCK","§bАлмазный стакер",all,lore,valueFormat,
+                twoMax,all,allowedBlocks7,"§bАлмазный стакер",all,itemLore);
+
+        ArrayList<String> allowedBlocks8 = new ArrayList<>();
+        allowedBlocks8.add("EMERALD_BLOCK");
+
+        IStack estack2 = new IStack("etack",displayOffset,"EMERALD_BLOCK","§aИзумрудный стакер",all,lore,valueFormat,
+                twoMax,all,allowedBlocks8,"§aИзумрудный стакер",all,itemLore);
+
         BSAddon.stackers.add(itack);
         BSAddon.stackers.add(gstack);
         BSAddon.stackers.add(dstack);
         BSAddon.stackers.add(estack);
+        BSAddon.stackers.add(itack2);
+        BSAddon.stackers.add(gstack2);
+        BSAddon.stackers.add(dstack2);
+        BSAddon.stackers.add(estack2);
     }
 
     public static List<IStack> getAllStackers() {

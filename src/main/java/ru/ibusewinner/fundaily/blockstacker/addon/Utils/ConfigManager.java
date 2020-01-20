@@ -11,7 +11,7 @@ public class ConfigManager {
     public String getMySQLHost() { return bsAddon.getConfig().getString("MySQL.host"); }
     public String getMySQLPassword() { return bsAddon.getConfig().getString("MySQL.password"); }
     public String getMySQLTable() { return bsAddon.getConfig().getString("MySQL.table"); }
-    public String getMySQLUser() { return bsAddon.getConfig().getString("MySQL.user"); }
+    public String getMySQLUser() { return bsAddon.getConfig().getString("MySQL.username"); }
     public boolean isAutoSaveEnabled() {
         return bsAddon.getConfig().getBoolean("autosave-enabled");
     }
