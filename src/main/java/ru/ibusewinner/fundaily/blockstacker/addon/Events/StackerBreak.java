@@ -33,10 +33,12 @@ public class StackerBreak implements Listener {
                 if(player.hasPermission("bs.breakstacker")) {
                     Material mat = player.getItemInHand().getType();
                     if(util.isPickaxe(mat)) {
-                        player.sendMessage(mm.applyCC(mm.brokeStacker()));
-                        DisplayManager.deleteDisplay(sp.getDisplay());
-                        new StackerNonSolid(sp.getType(), sp.getChosenMaterial(), sp.getValue(), player.getUniqueId());
-                        placedStacks.deleteStack(location);
+                        if(player.isSneaking()) {
+                            player.sendMessage(mm.applyCC(mm.brokeStacker()));
+                            DisplayManager.deleteDisplay(sp.getDisplay());
+                            new StackerNonSolid(sp.getType(), sp.getChosenMaterial(), sp.getValue(), player.getUniqueId());
+                            placedStacks.deleteStack(location);
+                        }
                     } else {
                         event.setCancelled(true);
                         player.sendMessage(mm.applyCC(mm.holdPickaxe()));
